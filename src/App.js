@@ -1,4 +1,4 @@
-import {component} from 'react'
+import {Component} from 'react'
 
 import './App.css'
 
@@ -80,91 +80,102 @@ const initialHistoryList = [
 
 // Replace your code here
 class App extends Component {
-    state = {
-        searchInput: '',
-        latestHistoryList: initialHistoryList,
-        isTrue: false,
-    }
+  state = {
+    searchInput: '',
+    latestHistoryList: initialHistoryList,
+    isTrue: false,
+  }
 
-    FillFunction = value => {
-        const {latestHistoryList} = this.state
-        const newHistoryList = latestHistoryList.filter(
-            eachValue => eachValue.id !== value
-        )
-        if (newHistoryList.length === 0) {
-            this.setState({latestHistoryList: newHistoryList, isTrue:true})
-        } else {
-            this.setState({latestHistoryList: newHistoryList})
-        }
-    }
-
-    ChangeFunction = e => {
-        this.setState({searchInput: e.target.value})
-    }
-     
-    render() {
-        const {searchInput, latestHistoryList} = this.state
-        let {isTrue} = this.state
-        const newHistoryList = latestHistoryList.filter(eachValue =>
-            eachValue.title.toLowerCase().includes(searchInput.toLoweCase()),
-        )
-    if (newHistoryList.length === 0) {
-        isTrue = true
-    }
-    return {
-      <div className = "main-container">
-        <div className = "top-holder">
-          <img 
-            src="https://assests.ccbp.in/frontend/react-js/history-website-logo-img.png"
-            className = "image"
-            alt = "app-logo"
-        />
-            <div className = "search-holder">
-              <img 
-                src="https://assests.ccbp.in/frontend/react-js/search-img.png"
-                className = "search-icon"
-                alt = "search"
-                />
-                <input type ="search"
-                className = "input-element"
-                placeholder = "Search history"
-                onChange = {this.ChangeFunction}
-                value = {searchInput}
-                />
-            </div>
-        </div>
-        <div className = "content-holder">
-            {!isTrue} && (
-                <ul className = "inner-holder">
-                    {newHistoryList.map(eachObject =>(
-                        <li key = {eachObject.id} uniqueId = {eachObject.id} className = "items-holder" >
-                            <p className  = "time">{eachObject.timeAccessed}</p>
-                            <div className = "icon-holder">
-                                <img src={eachObject.logoUrl}
-                                className = "logo-element" alt = "domain logo" />
-                                <div className = "logo-content">
-                                    <p className = "name">{eachObject.title}</p>
-                                    <p className = "website">{eachObject.domainUrl}</p>
-                                </div>
-                            </div>
-                            <button className = "delete-button" data-testid = "delete" type ="button" onclick = {() => this.FillFunction(eachObject.id)}>
-                                <img className = "delete-icon" src = "https://assests.ccbp.in/frontend/react-js/delete-img.png" alt = "delete" />
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-            {isTrue && (
-                <div className = "empty-container">
-                    <p className = "empty-element">There is no history to show</p>
-                </div>
-            )}
-        </div>
-        </div>
-        
+  FillFunction = value => {
+    const {latestHistoryList} = this.state
+    const newHistoryList = latestHistoryList.filter(
+      eachValue => eachValue.id !== value,
     )
+    if (newHistoryList.length === 0) {
+      this.setState({latestHistoryList: newHistoryList, isTrue: true})
+    } else {
+      this.setState({latestHistoryList: newHistoryList})
     }
+  }
 
+  ChangeFunction = e => {
+    this.setState({searchInput: e.target.value})
+  }
+
+  render() {
+    const {searchInput, latestHistoryList} = this.state
+    let {isTrue} = this.state
+    const newHistoryList = latestHistoryList.filter(eachValue =>
+      eachValue.title.toLowerCase().includes(searchInput.toLoweCase()),
+    )
+    if (newHistoryList.length === 0) {
+      isTrue = true
+    }
+    return (
+      <div className="main-container">
+        <div className="top-holder">
+          <img
+            src="https://assests.ccbp.in/frontend/react-js/history-website-logo-img.png"
+            className="image"
+            alt="app-logo"
+          />
+          <div className="search-holder">
+            <img
+              src="https://assests.ccbp.in/frontend/react-js/search-img.png"
+              className="search-icon"
+              alt="search"
+            />
+            <input
+              type="search"
+              className="input-element"
+              placeholder="Search history"
+              onChange={this.ChangeFunction}
+              value={searchInput}
+            />
+          </div>
+        </div>
+        <div className="content-holder">
+          {!isTrue} && (
+          <ul className="inner-holder">
+            {newHistoryList.map(eachObject => (
+              <li key={eachObject.id} className="items-holder">
+                <p className="time">{eachObject.timeAccessed}</p>
+                <div className="icon-holder">
+                  <img
+                    src={eachObject.logoUrl}
+                    className="logo-element"
+                    alt="domain logo"
+                  />
+                  <div className="logo-content">
+                    <p className="name">{eachObject.title}</p>
+                    <p className="website">{eachObject.domainUrl}</p>
+                  </div>
+                </div>
+                <button
+                  className="delete-button"
+                  data-testid="delete"
+                  type="button"
+                  onClick={() => this.FillFunction(eachObject.id)}
+                >
+                  <img
+                    className="delete-icon"
+                    src="https://assests.ccbp.in/frontend/react-js/delete-img.png"
+                    alt="delete"
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+          )
+          {isTrue && (
+            <div className="empty-container">
+              <p className="empty-element">There is no history to show</p>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default App
